@@ -1012,30 +1012,53 @@ nav {
   font-weight: 600;
   margin-bottom: 1rem;
   color: var(--text-primary);
+  text-align: center;
 }
 
 .tech-icons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
 
 .tech-icon {
   width: 60px;
-  height: 60px;
+  height: 75px;
   background: var(--bg-secondary);
   border-radius: var(--radius-md);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: 1.75rem;
   cursor: pointer;
   position: relative;
   transition: transform var(--transition-normal);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  padding: 0.5rem;
+}
+
+.tech-icon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transition: transform var(--transition-normal);
 }
 
 .tech-icon:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.1);
+  border-color: var(--primary);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+}
+
+.tech-icon:hover::before {
+  transform: scaleX(1);
 }
 
 .tech-icon i {
@@ -1043,6 +1066,53 @@ nav {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  position: relative;
+  z-index: 1;
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.tech-name {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  transition: color var(--transition-normal);
+}
+
+.tech-icon:hover .tech-name {
+  color: var(--primary);
+}
+
+.skill-level {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  color: white;
+  padding: 0.125rem 0.25rem;
+  border-radius: var(--radius-sm);
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: all var(--transition-normal);
+}
+
+.tech-icon:hover .skill-level {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tech-stack-description {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+  font-style: italic;
 }
 
 .tech-icon::after {
@@ -1565,27 +1635,49 @@ nav {
   color: var(--primary);
 }
 
-.education-predicat {
-  display: inline-flex;
+.education-predikat-badge {
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(102, 126, 234, 0.1);
-  border: 1px solid var(--primary);
-  border-radius: var(--radius-md);
-  margin: 0.5rem 0;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: var(--radius-pill);
+  margin: 0.75rem 0;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  animation: predikatGlow 2s ease-in-out infinite;
 }
 
-.predicat-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+@keyframes predikatGlow {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(102, 126, 234, 0.5);
+  }
 }
 
-.predicat-value {
-  font-size: 1.125rem;
+.education-predikat-badge i {
+  font-size: 1.25rem;
+  color: white;
+  animation: awardPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes awardPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.predikat-text {
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--primary);
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .education-description {
@@ -3155,7 +3247,7 @@ nav {
   }
   
   .section {
-    padding: 4rem 0;
+    padding: 3rem 0;
   }
   
   .hero-title { 
@@ -3295,9 +3387,34 @@ nav {
   }
   
   .tech-icons {
+    display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.75rem;
+  }
+  
+  .tech-icon {
+    width: 50px;
+    height: 65px;
+    font-size: 1.5rem;
+    padding: 0.25rem;
+  }
+  
+  .tech-icon i {
+    font-size: 1.25rem;
+    margin-bottom: 0.125rem;
+  }
+  
+  .tech-name {
+    font-size: 0.5rem;
+  }
+  
+  .skill-level {
+    font-size: 0.5rem;
+  }
+  
+  .tech-stack-description {
+    font-size: 0.7rem;
   }
   
   .experience-timeline {
@@ -3337,11 +3454,35 @@ nav {
   .education-gpa {
     justify-content: center;
     margin: 0.5rem auto;
+    flex-wrap: wrap;
+  }
+  
+  .education-predikat-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem auto;
+    flex-wrap: wrap;
+    width: fit-content;
+  }
+  
+  .education-predikat-badge i {
+    font-size: 1rem;
+  }
+  
+  .predikat-text {
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
   }
   
   .education-description {
     text-align: left;
     font-size: 0.85rem;
+    padding: 0.5rem;
+    margin-bottom: 0;
+    padding-bottom: 0.5rem;
   }
   
   .education-courses h4 {
