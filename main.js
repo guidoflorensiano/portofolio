@@ -1,3 +1,22 @@
+// Tech Stack Click Functionality
+const techIcons = document.querySelectorAll('.tech-icon');
+
+techIcons.forEach(icon => {
+  icon.addEventListener('click', function() {
+    const link = this.getAttribute('data-link');
+    const techName = this.getAttribute('data-tooltip');
+    const skillLevel = this.getAttribute('data-skill');
+    
+    if (link && link !== '#') {
+      // Open documentation in new tab
+      window.open(link, '_blank');
+    } else {
+      // Show notification for technologies without documentation
+      showNotification(`${techName} - Skill Level: ${skillLevel}%`, 'info');
+    }
+  });
+});
+
 // Enhanced Cursor Effects with Trail
 const cursorDot = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
